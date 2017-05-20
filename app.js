@@ -24,16 +24,16 @@ const request = {
     sampleRateHertz: sampleRateHertz,
     languageCode: languageCode
   },
-  interimResults: false // If you want interim results, set this to true
+  interimResults: true // If you want interim results, set this to true
 };
 
 // Create a recognize stream
 const recognizeStream = speech.createRecognizeStream(request)
   .on('error', console.error)
-  .on('data', (data) => process.stdout.write(data.results));
+  .on('data', (data) => console.log(data.results));
 
 // Start recording and send the microphone input to the Speech API
-record
+var recorder = record
   .start({
     sampleRateHertz: sampleRateHertz,
     threshold: 0,
@@ -42,12 +42,13 @@ record
     recordProgram: 'rec' // Try also "arecord" or "sox"
     // silence: '10.0'
   })
-  .on('error', console.error)
-  .pipe(recognizeStream)
-  .pipe(audioFile);
+  .on('error', console.error);
+
+recorder.pipe(audioFile);
+recorder.pipe(recognizeStream);
 
 setTimeout(function () {
   record.stop()
-}, 3000)
+}, 6000)
 
 console.log('Listening, press Ctrl+C to stop.');
