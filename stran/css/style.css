@@ -47,7 +47,11 @@ h2 {
 	font-size: 1.4em;
 }
 
-.top-bar input:focus, .top-bar input:focus{
+.top-bar input:focus, .top-bar input:active{
+    outline: none;
+}
+
+.top-bar button:focus, .top-bar button:active{
     outline: none;
 }
 
