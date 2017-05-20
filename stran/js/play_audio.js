@@ -25,4 +25,18 @@ function start_stop_recording () {
     }
 }
 
-console.log("teststst");
+
+var testing_strings = ["Slovenia is in a rather active seismic zone because of its position on the small Adriatic Plate, which is squeezed between the Eurasian Plate to the north and the African Plate to the south and rotates counter-clockwise.",
+                        "Thus the country is at the junction of three important geotectonic units: the Alps to the north, the Dinaric Alps to the south and the Pannonian Basin to the east.[99] Scientists have been able to identify 60 destructive earthquakes in the past.",
+                        "Additionally, a network of seismic stations is active throughout the country.[99] Many parts of Slovenia have a carbonate ground, and an extensive subterranean system has developed."];
+
+
+function make_html_from_text(text_array) {
+    
+}
+
+
+
+function search() {
+    
+}
