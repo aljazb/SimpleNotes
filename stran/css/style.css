@@ -51,7 +51,7 @@ h2 {
     outline: none;
 }
 
-#btn-record{
+#btn-record.start{
 	height: 30px;
 	width: 30px;
 	background-color: #e00;
@@ -115,4 +115,40 @@ h2 {
 	padding: 2px 10px;
 	color:#fff;
 	line-height: 18px;
+}
+
+
+.top-bar button {
+	height: 58px;
+	background: none;
+	border: 0px;
+}
+
+.top-bar button:hover {
+	background: #eeeeee;
+}
+
+.top-bar input[name="search"] {
+	line-height: 58px;
+	height: 40px !important;
+	border: 1px solid #5bc0de;
+	vertical-align: middle;
+	display: inline-block;
+	border-radius: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+
+.top-bar input[name="search"]:focus, .top-bar input[name="search"]:hover  {
+	background-color: #F0FAFF;
+}
+
+
+#btn-record.stop {
+	height: 30px;
+	width: 30px;
+	background-color: #3c3c3c;
+	border: 8px solid #3c3c3c;
+	transition: all 0.1s ease-in-out;
 }
