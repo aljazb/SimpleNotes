@@ -1,54 +1,23 @@
-const record = require('node-record-lpcm16');
-var fs = require('fs');
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-// Imports the Google Cloud client library
-const Speech = require('@google-cloud/speech');
+var port = process.env.PORT || 8042;
 
-// Instantiates a client
-const speech = Speech();
+var speech = require('./app/speech');
 
-// The encoding of the audio file, e.g. 'LINEAR16'
-const encoding = 'LINEAR16';
 
-// The sample rate of the audio file in hertz, e.g. 16000
-const sampleRateHertz = 16000;
+app.get('/record', speech.snemaj);
+app.get('/stop', speech.ustavi);
 
-// The BCP-47 language code to use, e.g. 'en-US'
-const languageCode = 'en-US';
+io.on('connection', speech.socketConnection);
+io.on('message', speech.socketMessage);
 
-var audioFile = fs.createWriteStream('/Users/Aljaz/Desktop/test.wav', { encoding: 'binary' });
 
-const request = {
-  config: {
-    encoding: encoding,
-    sampleRateHertz: sampleRateHertz,
-    languageCode: languageCode
-  },
-  interimResults: true // If you want interim results, set this to true
-};
 
-// Create a recognize stream
-const recognizeStream = speech.createRecognizeStream(request)
-  .on('error', console.error)
-  .on('data', (data) => console.log(data.results));
 
-// Start recording and send the microphone input to the Speech API
-var recorder = record
-  .start({
-    sampleRateHertz: sampleRateHertz,
-    threshold: 0,
-    // Other options, see https://www.npmjs.com/package/node-record-lpcm16#options
-    verbose: false,
-    recordProgram: 'rec' // Try also "arecord" or "sox"
-    // silence: '10.0'
-  })
-  .on('error', console.error);
 
-recorder.pipe(audioFile);
-recorder.pipe(recognizeStream);
-
-setTimeout(function () {
-  record.stop()
-}, 10000);
-
-console.log('Listening, press Ctrl+C to stop.');
+server.listen(2017);
+app.listen(port);
+console.log('Čarovnija se zgodi na vratih ' + port);
