@@ -14,6 +14,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <script src="js/moment.min.js"></script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -70,5 +72,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var startTime;
+      var recording = false;
+      var stopwatch = function() { 
+        var diff = moment.utc((new Date()).getTime() - startTime.getTime());
+
+        $("#timer-text").text(diff.format("H:mm:ss")); 
+      }
+
+      var stopwatchHandle = false;
+      
+      $(document).ready(function() {
+          $("#btn-record").click(function() {
+            if(!recording){
+              recording = true;
+              startTime = new Date();
+              stopwatchHandle = setInterval(stopwatch, 1000);
+            } else {
+              recording = false;
+              clearInterval(stopwatchHandle);
+            }
+          });
+      });
+    </script>
   </body>
 </html>
