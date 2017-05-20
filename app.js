@@ -1,4 +1,5 @@
 const record = require('node-record-lpcm16');
+var fs = require('fs');
 
 // Imports the Google Cloud client library
 const Speech = require('@google-cloud/speech');
@@ -14,6 +15,8 @@ const sampleRateHertz = 16000;
 
 // The BCP-47 language code to use, e.g. 'en-US'
 const languageCode = 'en-US';
+
+var audioFile = fs.createWriteStream('test.wav', { encoding: 'binary' });
 
 const request = {
   config: {
@@ -36,10 +39,15 @@ record
     threshold: 0,
     // Other options, see https://www.npmjs.com/package/node-record-lpcm16#options
     verbose: false,
-    recordProgram: 'rec', // Try also "arecord" or "sox"
-    silence: '10.0'
+    recordProgram: 'rec' // Try also "arecord" or "sox"
+    // silence: '10.0'
   })
   .on('error', console.error)
-  .pipe(recognizeStream);
+  .pipe(recognizeStream)
+  .pipe(audioFile);
+
+setTimeout(function () {
+  record.stop()
+}, 3000)
 
 console.log('Listening, press Ctrl+C to stop.');
