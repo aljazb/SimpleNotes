@@ -1,6 +1,10 @@
 const record = require('node-record-lpcm16');
 var fs = require('fs');
 
+var curSocket = false;
+var startTime = new Date();
+var curTime = new Date();
+
 exports.snemaj = function(req, res) {
   // Imports the Google Cloud client library
   const Speech = require('@google-cloud/speech');
@@ -15,7 +19,7 @@ exports.snemaj = function(req, res) {
   const sampleRateHertz = 16000;
 
   // The BCP-47 language code to use, e.g. 'en-US'
-  const languageCode = 'en-US';
+  const languageCode = 'sl-SI';
 
   var audioFile = fs.createWriteStream('/Users/Aljaz/Desktop/test.wav', { encoding: 'binary' });
 
@@ -31,7 +35,12 @@ exports.snemaj = function(req, res) {
   // Create a recognize stream
   const recognizeStream = speech.createRecognizeStream(request)
     .on('error', console.error)
-    .on('data', (data) => console.log(data));
+    .on('data', (data) => {
+      if(curSocket){
+        curSocket.emit('recognized',{text:data.results, time: (curTime.getTime() - startTime.getTime())/1000.0});
+      }
+      curTime = new Date();
+    });
 
   // Start recording and send the microphone input to the Speech API
   var recorder = record
@@ -45,6 +54,9 @@ exports.snemaj = function(req, res) {
     })
     .on('error', console.error);
 
+  startTime = new Date();
+  curTime = startTime;
+
   recorder.pipe(audioFile);
   recorder.pipe(recognizeStream);
 
@@ -55,4 +67,13 @@ exports.snemaj = function(req, res) {
 exports.ustavi = function(req, res) {
   record.stop();
   res.end();
+}
+
+
+exports.socketConnection = function(socket){
+  curSocket = socket;
+}
+
+exports.socketMessage = function(message){
+  console.log(message);
 }
