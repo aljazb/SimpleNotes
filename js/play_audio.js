@@ -3,8 +3,8 @@
  */
 
 function on_button_click() {
-
-    play_audio("file:///home/markozeman/Desktop/organfinale.wav", 8);
+    play_audio("/Users/Aljaz/Desktop/test.wav", 0);
+    // play_audio("file:///home/markozeman/Desktop/organfinale.wav", 8);
 }
 
 
