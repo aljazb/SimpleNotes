@@ -16,7 +16,7 @@ const sampleRateHertz = 16000;
 // The BCP-47 language code to use, e.g. 'en-US'
 const languageCode = 'en-US';
 
-var audioFile = fs.createWriteStream('test.wav', { encoding: 'binary' });
+var audioFile = fs.createWriteStream('/Users/Aljaz/Desktop/test.wav', { encoding: 'binary' });
 
 const request = {
   config: {
@@ -94,10 +94,9 @@ recorder.pipe(recognizeStream);
 
 setTimeout(function () {
   record.stop()
-}, 6000)
+}, 30000)
 
-console.log('Listening, press Ctrl+C to stop.');
-recorder.pipe(audioFile);
+console.log('Listening, press Ctrl+C to stop.');recorder.pipe(audioFile);
 recorder.pipe(recognizeStream);
 
 setTimeout(function () {
