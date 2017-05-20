@@ -1,0 +1,30 @@
+{
+  "name": "Notes",
+  "description": "Notes app",
+  "version": "0.0.1",
+  "private": true,
+  "author": "Brian Frichette",
+  "homepage": "",
+  "contributors": [
+    "Brian Frichette <brian.frichette@gmail.com> (https://github.com/brian-frichette)"
+  ],
+  "bugs": {
+    "url": ""
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "@google-cloud/speech": "^0.9.2",
+    "node-record-lpcm16": "^0.3.0"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "repository": "",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ]
+}
