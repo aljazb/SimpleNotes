@@ -237,3 +237,13 @@ h2 {
 	line-height: 12px;
 	color:#666;
 }
+
+.btn-add{
+	line-height: 58px;
+	color: #17d200;
+}
+
+.btn-add:hover{
+	cursor: pointer;
+	color: #13af00;
+}
