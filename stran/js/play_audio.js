@@ -77,7 +77,7 @@ var text_objects = [];
 function make_html_from_text(text_object) {
     text_objects.push(text_object);
     var s = text_object.text;
-    $("#speech_text").append(`<p class="odstavek" style="padding: 5px;"" > <span class="glyphicon glyphicon-play" hidden></span> ${s}</p>`);
+    $("#speech_text").append(`<p class="odstavek" style="padding: 5px;" > <span class="glyphicon glyphicon-play" hidden></span> ${s}</p>`);
 }
 
 $(document).ready(main);
