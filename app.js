@@ -8,7 +8,7 @@ var port = process.env.PORT || 8042;
 var speech = require('./app/speech');
 
 
-app.get('/record', speech.snemaj);
+app.get('/record/*', speech.snemaj);
 app.get('/stop', speech.ustavi);
 
 io.on('connection', speech.socketConnection);
@@ -16,7 +16,7 @@ io.on('message', speech.socketMessage);
 
 
 
-
+app.use(express.static('stran'));
 
 server.listen(2017);
 app.listen(port);

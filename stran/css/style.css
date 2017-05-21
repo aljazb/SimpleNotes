@@ -47,7 +47,11 @@ h2 {
 	font-size: 1.4em;
 }
 
-.top-bar input:focus, .top-bar input:focus{
+.top-bar input:focus, .top-bar input:active{
+    outline: none;
+}
+
+.top-bar button:focus, .top-bar button:active{
     outline: none;
 }
 
@@ -117,6 +121,13 @@ h2 {
 	line-height: 18px;
 }
 
+.tag.c-1{
+	background-color: #707;
+}
+
+.tag.c-2{
+	background-color: #ef9f14;
+}
 
 .top-bar button {
 	height: 58px;
@@ -151,6 +162,90 @@ h2 {
 	background-color: #3c3c3c;
 	border: 8px solid #3c3c3c;
 	transition: all 0.1s ease-in-out;
+}
+
+.predavanja-seznam{
+	margin-top: 30px;
+}
+
+.predavanja-entry{
+	border-bottom: 1px solid #eee;
+}
+
+.predavanja-entry:hover{
+	cursor: pointer;
+	background-color: #eee;
+}
+
+.predavanja-entry > div{
+	height: 60px;
+	line-height: 60px;
+}
+
+.predavanja-entry > div > *{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.predavanja-entry .tag{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 11px;
+	border-radius: 10px;
+	height: 20px;
+	padding: 2px 10px;
+	color:#fff;
+	line-height: 18px;
+	margin-left: 8px;
+}
+
+.predavanja-entry .title{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 24px;
+	line-height: 26px;
+	color:#444;
+}
+
+
+.predavanja-entry .timestamp{
+	margin-left: 10px;
+	line-height: 24px;
+}
+
+.predavanja-entry .time-icon{
+	font-size: 12px;
+	margin-left: 6px;
+}
+
+.predavanja-entry .datum{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 12px;
+	line-height: 12px;
+	color:#666;
+}
+
+.predavanja-entry .ura, .predavanja-entry .dot{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 12px;
+	line-height: 12px;
+	color:#666;
+}
+
+.predavanja-entry .trajanje{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 12px;
+	color:#666;
+}
+
+.btn-add{
+	line-height: 58px;
+	color: #17d200;
+}
+
+.btn-add:hover{
+	cursor: pointer;
+	color: #13af00;
 }
 
 .odstavek:hover {
