@@ -8,6 +8,7 @@ var toLang = 0;
 var startTime;
 var recording = false;
 var audio = false;
+var curPred = false;
 var stopwatch = function() { 
     var diff = moment.utc((new Date()).getTime() - startTime.getTime());
 
@@ -40,6 +41,17 @@ $(document).ready(function() {
         var i = $('#speech_text .odstavek').index(this);
         console.log(text_objects[i]);
         play_audio("audio/last.wav", text_objects[i].time);
+    });
+
+    $(".predavanja-seznam").on("click", ".predavanja-entry", function(){
+        var i = $('.predavanja-seznam .predavanja-entry').index(this);
+
+        curPred = predavanja[i];
+        $("#txt-title").val(curPred.title);
+        $(".top-bar .tags").html(`<span class="tag c-${curPred.color}">${curPred.predmet}</span>`);
+
+        text_objects = curPred.content;
+        renderBesedilo();
     });
 
     renderSeznam();
@@ -79,7 +91,7 @@ function start_stop_recording () {
       $('#btn-record').addClass('start');
       $.get('http://localhost:8042/stop');
 
-      predavanja.unshift({
+      let p = {
         title: $("#txt-title").val(),
         predmet:"TPO",
         color: 1,
@@ -87,7 +99,11 @@ function start_stop_recording () {
         duration: (new Date()).getTime() - startTime.getTime(),
         audioFile: "audio/last.wav",
         content: text_objects
-      });
+      };
+
+      predavanja.unshift(p);
+
+      curPred = p;
       
       renderSeznam();
 
@@ -110,7 +126,11 @@ var predavanja = [
         duration: 1000 * 60 * 60 * 3,
         audioFile: "audio/test1.wav",
         content: [
-            {text: "Neko besedilo", time:0}
+            {text:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.", time: 0},
+            {text:"Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.", time: 0},
+            {text:"Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae facilisis libero dolor a purus. Sed vel lacus. Mauris nibh felis, adipiscing varius, adipiscing in, lacinia vel, tellus. Suspendisse ac urna. Etiam pellentesque mauris ut lectus. Nunc tellus ante, mattis eget, gravida vitae, ultricies ac, leo. Integer leo pede, ornare a, lacinia eu, vulputate vel, nisl.", time: 0},
+            {text:"Suspendisse mauris. Fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper vehicula. Integer adipiscing risus a sem. Nullam quis massa sit amet nibh viverra malesuada. Nunc sem lacus, accumsan quis, faucibus non, congue vel, arcu. Ut scelerisque hendrerit tellus. Integer sagittis. Vivamus a mauris eget arcu gravida tristique. Nunc iaculis mi in ante. Vivamus imperdiet nibh feugiat est.", time: 0},
+            {text:"Ut convallis, sem sit amet interdum consectetuer, odio augue aliquam leo, nec dapibus tortor nibh sed augue. Integer eu magna sit amet metus fermentum posuere. Morbi sit amet nulla sed dolor elementum imperdiet. Quisque fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque adipiscing eros ut libero. Ut condimentum mi vel tellus. Suspendisse laoreet. Fusce ut est sed dolor gravida convallis. Morbi vitae ante. Vivamus ultrices luctus nunc. Suspendisse et dolor. Etiam dignissim. Proin malesuada adipiscing lacus. Donec metus. Curabitur gravida.", time: 0}
         ]
     },
     {
@@ -164,12 +184,22 @@ function renderSeznam(){
     }
 }
 
+function renderBesedilo(){
+    $("#speech_text").html('');
+
+    for(let i=0; i<curPred.content.length; i++){
+        var s = curPred.content[i].text;
+        $("#speech_text").append(`<p class="odstavek">${s}</p>`);
+    }
+    
+}
+
 
 
 function make_html_from_text(text_object) {
     text_objects.push(text_object);
     var s = text_object.text;
-    $("#speech_text").append(`<p class="odstavek"></span> ${s}</p>`);
+    $("#speech_text").append(`<p class="odstavek">${s}</p>`);
     if (fromLang != toLang) {
         if (toLang == 0) {
             responsiveVoice.speak(text_object.text);
@@ -224,10 +254,10 @@ function search(classname) {
 
             var res_html = text.replace(substring, changed_substring);
 
-            $("#speech_text").append(`<p class="odstavek"></span> ${res_html}</p>`);
+            $("#speech_text").append(`<p class="odstavek">${res_html}</p>`);
         }
         else {
-            $("#speech_text").append(`<p class="odstavek"></span>${text}</p>`);
+            $("#speech_text").append(`<p class="odstavek">${text}</p>`);
         }
     }
 
