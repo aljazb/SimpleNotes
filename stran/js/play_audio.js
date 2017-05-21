@@ -78,6 +78,13 @@ function make_html_from_text(text_object) {
     text_objects.push(text_object);
     var s = text_object.text;
     $("#speech_text").append(`<p class="odstavek"></span> ${s}</p>`);
+    if (fromLang != toLang) {
+        if (toLang == 0) {
+            responsiveVoice.speak(text_object.text);
+        } else {
+            responsiveVoice.speak(text_object.text, "Serbo-Croatian Male");
+        }
+    }
 }
 
 $(document).ready(main);
