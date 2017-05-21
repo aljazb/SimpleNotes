@@ -13,6 +13,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script src="js/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
@@ -52,7 +53,9 @@
           <div class="full-height">
             <button id="btn-record" class="start" onclick="start_stop_recording()" style="margin-right: 10px"></button>
           </div>
-          <input type="image" src="slovenia.png" style="height: 35%;" />
+          <input id="from-flag" type="image" src="slovenia.png" style="height: 35%;" />
+          <div class="glyphicon glyphicon-chevron-right"></div>
+          <input id="to-flag" type="image" src="slovenia.png" style="height: 35%;" />
         </div>
       </div>
     </div>
@@ -131,33 +134,8 @@
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-
-    <script type="text/javascript">
-      var startTime;
-      var recording = false;
-      var stopwatch = function() { 
-        var diff = moment.utc((new Date()).getTime() - startTime.getTime());
-
-        $("#timer-text").text(diff.format("H:mm:ss")); 
-      }
-
-      var stopwatchHandle = false;
-      
-      $(document).ready(function() {
-          $("#btn-record").click(function() {
-            if(!recording){
-              recording = true;
-              startTime = new Date();
-              stopwatchHandle = setInterval(stopwatch, 1000);
-            } else {
-              recording = false;
-              clearInterval(stopwatchHandle);
-            }
-          });
-      });
-    </script>
-  </body>
+    <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+   </body>
 </html>

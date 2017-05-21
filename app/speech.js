@@ -9,6 +9,8 @@ exports.snemaj = function(req, res) {
   // Imports the Google Cloud client library
   const Speech = require('@google-cloud/speech');
 
+  var prevedi = false;
+
   // Instantiates a client
   const speech = Speech();
 
@@ -19,7 +21,18 @@ exports.snemaj = function(req, res) {
   const sampleRateHertz = 16000;
 
   // The BCP-47 language code to use, e.g. 'en-US'
-  const languageCode = 'sl-SI';
+  var languageCode;
+  if (req.url.substring(8,9) == 1) {
+    languageCode = 'sl-SI';
+    if (req.url.substring(9) == 0) {
+      prevedi = true;
+    }
+  } else {
+    languageCode = 'en-US';
+    if (req.url.substring(9) == 1) {
+      prevedi = true;
+    }
+  }
 
   var audioFile = fs.createWriteStream('/Users/Aljaz/Desktop/test.wav', { encoding: 'binary' });
 
@@ -36,10 +49,14 @@ exports.snemaj = function(req, res) {
   const recognizeStream = speech.createRecognizeStream(request)
     .on('error', console.error)
     .on('data', (data) => {
-      if(curSocket){
-        curSocket.emit('recognized',{text:data.results, time: (curTime.getTime() - startTime.getTime())/1000.0});
-      }
-      curTime = new Date();
+      if (prevedi) {
+        translateText(data.results, 'en');
+      } else {
+        if(curSocket){
+          curSocket.emit('recognized',{text:data.results, time: (curTime.getTime() - startTime.getTime())/1000.0});
+        }
+        curTime = new Date();
+      } 
     });
 
   // Start recording and send the microphone input to the Speech API
@@ -67,6 +84,7 @@ exports.snemaj = function(req, res) {
 exports.ustavi = function(req, res) {
   record.stop();
   res.end();
+  console.log('Sem ustavljen!');
 }
 
 
@@ -76,4 +94,41 @@ exports.socketConnection = function(socket){
 
 exports.socketMessage = function(message){
   console.log(message);
+}
+
+function translateText (text, target) {
+  // [START translate_translate_text]
+  // Imports the Google Cloud client library
+  const Translate = require('@google-cloud/translate');
+
+  // Instantiates a client
+  const translate = Translate();
+
+  // The text to translate, e.g. "Hello, world!"
+  // const text = 'Hello, world!';
+
+  // The target language, e.g. "ru"
+  // const target = 'sl';
+
+  // Translates the text into the target language. "text" can be a string for
+  // translating a single piece of text, or an array of strings for translating
+  // multiple texts.
+  translate.translate(text, target)
+    .then((results) => {
+      let translations = results[0];
+      translations = Array.isArray(translations) ? translations : [translations];
+
+      console.log('Translations:');
+      translations.forEach((translation, i) => {
+        console.log(`${text[i]} => (${target}) ${translation}`);
+        if(curSocket){
+          curSocket.emit('recognized',{text:translation, time: (curTime.getTime() - startTime.getTime())/1000.0});
+        }
+        curTime = new Date();
+      });
+    })
+    .catch((err) => {
+      console.error('ERROR:', err);
+    });
+  // [END translate_translate_text]
 }
