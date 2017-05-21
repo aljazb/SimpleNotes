@@ -260,7 +260,7 @@ h2 {
 
 .odstavek:hover::before{
 	font-family: 'Glyphicons Halflings';
-	content:'\e072';
+	content:'';
 	text-align: center;
 	font-size: 32px;
 	color: #000;
