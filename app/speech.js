@@ -1,5 +1,6 @@
 const record = require('node-record-lpcm16');
 var fs = require('fs');
+var path = require('path');
 
 var curSocket = false;
 var startTime = new Date();
@@ -34,7 +35,7 @@ exports.snemaj = function(req, res) {
     }
   }
 
-  var audioFile = fs.createWriteStream('/Users/Aljaz/Desktop/test.wav', { encoding: 'binary' });
+  var audioFile = fs.createWriteStream(path.join(__dirname, '..', 'stran', 'audio', 'last.wav'), { encoding: 'binary' });
 
   const request = {
     config: {

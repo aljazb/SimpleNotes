@@ -7,6 +7,7 @@ var toLang = 0;
 
 var startTime;
 var recording = false;
+var audio = false;
 var stopwatch = function() { 
     var diff = moment.utc((new Date()).getTime() - startTime.getTime());
 
@@ -34,17 +35,26 @@ $(document).ready(function() {
         }
 
     });
+
+    $('#speech_text').on('click', '.odstavek', function(){
+        var i = $('#speech_text .odstavek').index(this);
+        console.log(text_objects[i]);
+        play_audio("audio/last.wav", text_objects[i].time);
+    });
 });
 
 var stopwatchHandle = false;
 
 function on_button_click() {
-    play_audio("/Users/Aljaz/Desktop/test.wav", 0);
+    play_audio("audio/last.wav", 0);
 }
 
 
 function play_audio(path, startTime) {
-    var audio = new Audio(path);
+    if(!audio){
+        audio = new Audio(path);
+    }
+    
     audio.currentTime = startTime;
     audio.play();
 }
@@ -67,10 +77,10 @@ function start_stop_recording () {
     }
 }
 
-
-var testing_strings = [{text: "Slovenia is in a rather active seismic zone because of its position on the small Adriatic Plate, which is squeezed between the Eurasian Plate to the north and the African Plate to the south and rotates counter-clockwise."},
-                        {text: "Thus the country is at the junction of three important geotectonic units: the Alps to the north, the Dinaric Alps to the south and the Pannonian Basin to the east.[99] Scientists have been able to identify 60 destructive earthquakes in the past."},
-                        {text: "Additionally, a network of seismic stations is active throughout the country.[99] Many parts of Slovenia have a carbonate ground, and an extensive subterranean system has developed."}];
+var testing_strings = [];
+// var testing_strings = [{text: "Slovenia is in a rather active seismic zone because of its position on the small Adriatic Plate, which is squeezed between the Eurasian Plate to the north and the African Plate to the south and rotates counter-clockwise."},
+//                         {text: "Thus the country is at the junction of three important geotectonic units: the Alps to the north, the Dinaric Alps to the south and the Pannonian Basin to the east.[99] Scientists have been able to identify 60 destructive earthquakes in the past."},
+//                         {text: "Additionally, a network of seismic stations is active throughout the country.[99] Many parts of Slovenia have a carbonate ground, and an extensive subterranean system has developed."}];
 
 var text_objects = [];
 
