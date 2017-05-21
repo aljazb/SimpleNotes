@@ -252,8 +252,9 @@ h2 {
 	border: 1px solid black;
 	border-radius: 5px;
 	padding: 5px;
+	margin-left: -3px;
 	background-color: #F0FAFF;
-	opacity: 0.5;
+	/*opacity: 0.5;*/
 	cursor: pointer;
 }
 

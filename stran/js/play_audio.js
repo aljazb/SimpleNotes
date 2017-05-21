@@ -77,7 +77,7 @@ var text_objects = [];
 function make_html_from_text(text_object) {
     text_objects.push(text_object);
     var s = text_object.text;
-    $("#speech_text").append(`<p class="odstavek"> <span class="glyphicon glyphicon-play hidden"></span> ${s}</p>`);
+    $("#speech_text").append(`<p class="odstavek" style="padding: 5px;"> <span class="glyphicon glyphicon-play" hidden></span> ${s}</p>`);
 }
 
 $(document).ready(main);
@@ -124,10 +124,10 @@ function search() {
 
             var res_html = text.replace(substring, changed_substring);
 
-            $("#speech_text").append(`<p class="odstavek">${res_html}</p>`);
+            $("#speech_text").append(`<p class="odstavek"> <span class="glyphicon glyphicon-play" hidden></span> ${res_html}</p>`);
         }
         else {
-            $("#speech_text").append(`<p class="odstavek">${text}</p>`);
+            $("#speech_text").append(`<p class="odstavek"><span class="glyphicon glyphicon-play" hidden></span>${text}</p>`);
         }
     }
 
