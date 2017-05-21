@@ -41,6 +41,8 @@ $(document).ready(function() {
         console.log(text_objects[i]);
         play_audio("audio/last.wav", text_objects[i].time);
     });
+
+    renderSeznam();
 });
 
 var stopwatchHandle = false;
@@ -76,6 +78,19 @@ function start_stop_recording () {
       $('#btn-record').removeClass('stop');
       $('#btn-record').addClass('start');
       $.get('http://localhost:8042/stop');
+
+      predavanja.unshift({
+        title: $("#txt-title").val(),
+        predmet:"TPO",
+        color: 1,
+        date: startTime,
+        duration: (new Date()).getTime() - startTime.getTime(),
+        audioFile: "audio/last.wav",
+        content: text_objects
+      });
+      
+      renderSeznam();
+
     }
 }
 
@@ -85,6 +100,71 @@ var testing_strings = [];
 //                         {text: "Additionally, a network of seismic stations is active throughout the country.[99] Many parts of Slovenia have a carbonate ground, and an extensive subterranean system has developed."}];
 
 var text_objects = [];
+
+var predavanja = [
+    {
+        title: "Scrum",
+        predmet:"PRPO",
+        color: 2,
+        date: new Date(2017,3,18,9,2,0,0),
+        duration: 1000 * 60 * 60 * 3,
+        audioFile: "audio/test1.wav",
+        content: [
+            {text: "Neko besedilo", time:0}
+        ]
+    },
+    {
+        title: "Errorji povsod",
+        predmet:"PRPO",
+        color: 2,
+        date: new Date(2017,1,14,16,15,0,0),
+        duration: 1000 * 60 * 60 * 2,
+        audioFile: "audio/test2.wav",
+        content: [
+            {text: "Neko besedilo 2", time:0}
+        ]
+    },
+    {
+        title: "Prvo predavanje",
+        predmet:"TPO",
+        color: 1,
+        date: new Date(2017,0,12,11,0,0,0),
+        duration: 1000 * 60 * 60 * 3,
+        audioFile: "audio/test2.wav",
+        content: [
+            {text: "Neko besedilo 3", time:0}
+        ]
+    }
+];
+
+function renderSeznam(){
+    $(".predavanja-seznam").html('');
+
+    for(let i=0; i<predavanja.length; i++){
+        let pred = predavanja[i];
+        let d = moment(pred.date);
+        let dur = moment.duration(pred.duration);
+        let el = `<div class="col-xs-12 predavanja-entry">
+              <div class="col-xs-8">
+                <span class="title">${pred.title}</span>
+                <span class="tag c-${pred.color}">${pred.predmet}</span>
+              </div>
+              <div class="col-xs-4">
+                <div class="timestamp">
+                  <div class="datum">${d.format("DD.MM.YYYY")}</div>
+                  <div class="time">
+                    <span class="ura">${d.format("hh:mm")}</span>
+                    <span class="glyphicon glyphicon-time time-icon"></span>
+                    <span class="trajanje">${dur.hours()}h</span>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        $(".predavanja-seznam").append(el);
+    }
+}
+
+
 
 function make_html_from_text(text_object) {
     text_objects.push(text_object);
