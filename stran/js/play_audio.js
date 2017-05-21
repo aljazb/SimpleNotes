@@ -67,6 +67,8 @@ function start_stop_recording () {
       stopwatchHandle = setInterval(stopwatch, 1000);
       $('#btn-record').removeClass('start');
       $('#btn-record').addClass('stop');
+      text_objects = [];
+      $('#speech_text').html('');
       $.get('http://localhost:8042/record/'+fromLang+toLang);
     } else {
       recording = false;
