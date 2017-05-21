@@ -77,7 +77,7 @@ var text_objects = [];
 function make_html_from_text(text_object) {
     text_objects.push(text_object);
     var s = text_object.text;
-    $("#speech_text").append(`<p class="odstavek" style="padding: 5px;"> <span class="glyphicon glyphicon-play" hidden></span> ${s}</p>`);
+    $("#speech_text").append(`<p class="odstavek" style="padding: 5px;"" > <span class="glyphicon glyphicon-play" hidden></span> ${s}</p>`);
 }
 
 $(document).ready(main);
@@ -94,7 +94,9 @@ function main() {
 var counter = 0;
 var found_indices = [];
 
-function search() {
+function search(classname) {
+    console.log(classname);
+
     remove_children('speech_text');
 
     $("#speech_text").append("<h2>Trenutno predavanje</h2>");
@@ -112,6 +114,7 @@ function search() {
         if (index != -1) {
             found = true;
             found_indices.push(i);
+            found_indices = found_indices.filter( onlyUnique );
 
             var substring = text.substring(index, index+search_string.length);
 
@@ -119,7 +122,7 @@ function search() {
                 var changed_substring = '<span style=\"background-color: #ffff00;\">'+ substring +'</span>';
             }
             else {
-                var changed_substring = '<span style=\"background-color: #aaaa00;\">'+ substring +'</span>';
+                var changed_substring = '<span style=\"background-color: orange;\">'+ substring +'</span>';
             }
 
             var res_html = text.replace(substring, changed_substring);
@@ -140,16 +143,34 @@ function search() {
         }, 1000);
     }
     else {
+        console.log(found_indices);
+        console.log(counter);
+
         var index = found_indices.indexOf(counter);
-        if (index+1 < found_indices.length) {
-            counter = found_indices[index+1];
+        if (classname == "right") {
+            if (index+1 < found_indices.length) {
+                counter = found_indices[index+1];
+            }
+            else {
+                counter = found_indices[0];
+            }
         }
         else {
-            counter = found_indices[0];
+            if (index > 0) {
+                counter = found_indices[index-1];
+            }
+            else {
+                counter = found_indices[found_indices.length-1];
+            }
         }
-
+        console.log(counter);
+        console.log();
     }
+}
 
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
 }
 
 
