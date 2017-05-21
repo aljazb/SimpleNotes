@@ -55,10 +55,10 @@
         </div>
         <div class="col-xs-2 timer">
           <div id="timer-text">0:00:00</div>
-          <div class="full-height">
+          <div class="full-height" style="border-right: 1px solid #ddd">
             <button id="btn-record" class="start" onclick="start_stop_recording()" style="margin-right: 10px"></button>
           </div>
-          <input id="from-flag" type="image" src="slovenia.png" style="height: 35%;" />
+          <input id="from-flag" type="image" src="slovenia.png" style="margin-left:10px; height: 35%;" />
           <div class="glyphicon glyphicon-chevron-right"></div>
           <input id="to-flag" type="image" src="slovenia.png" style="height: 35%;" />
         </div>
@@ -121,8 +121,10 @@
 
           </div>
         </div>
-        <div class="col-xs-6 right-col" id="speech_text">
+        <div class="col-xs-6 right-col">
           <h2>Trenutno predavanje</h2>
+          <div id="speech_text">
+          </div>
         </div>
       </div>
     </div>

@@ -56,11 +56,11 @@ h2 {
 }
 
 #btn-record.start{
-	height: 30px;
-	width: 30px;
+	height: 18px;
+	width: 18px;
 	background-color: #e00;
 	border-radius: 50%;
-	border: 8px solid #e00;
+	border: 4px solid #e00;
 	transition: all 0.1s ease-in-out;
 }
 
@@ -157,10 +157,10 @@ h2 {
 
 
 #btn-record.stop {
-	height: 30px;
-	width: 30px;
+	height: 18px;
+	width: 18px;
 	background-color: #3c3c3c;
-	border: 8px solid #3c3c3c;
+	border: 4px solid #3c3c3c;
 	transition: all 0.1s ease-in-out;
 }
 
@@ -248,21 +248,32 @@ h2 {
 	color: #13af00;
 }
 
-.odstavek:hover {
-	border: 1px solid black;
-	border-radius: 5px;
-	padding: 5px;
-	margin-left: -3px;
-	background-color: #F0FAFF;
-	/*opacity: 0.5;*/
-	cursor: pointer;
+.odstavek{
+	position: relative;
 }
 
+.odstavek:hover{
+	background-color: #eee;
+	color: #444;
+	box-shadow: 0px 0px 0px 7px #eee;
+}
 
-.odstavek:hover.glyphicon-play {
-	top: 50%;
-	left: 50%;
-	font-size: 40px;
-	color: black;
-	display: inline-block !important;
+.odstavek:hover::before{
+	font-family: 'Glyphicons Halflings';
+	content:'\e072';
+	text-align: center;
+	font-size: 32px;
+	color: #000;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	padding-top: 10px;
+	cursor: pointer;
+
+}
+
+#speech_text{
+	margin-top: 30px;
 }
