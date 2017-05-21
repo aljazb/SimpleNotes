@@ -17,20 +17,20 @@ $(document).ready(function() {
     $('#from-flag').click(function() {
         if (fromLang == 0) {
             fromLang = 1;
-            $('#from-flag').attr('src', 'united-kingdom.png');
+            $('#from-flag').attr('src', 'slovenia.png');
         } else {
             fromLang = 0;
-            $('#from-flag').attr('src', 'slovenia.png');
+            $('#from-flag').attr('src', 'united-kingdom.png');
         }
 
     });
     $('#to-flag').click(function() {
         if (toLang == 0) {
             toLang = 1;
-            $('#to-flag').attr('src', 'united-kingdom.png');
+            $('#to-flag').attr('src', 'slovenia.png');
         } else {
             toLang = 0;
-            $('#to-flag').attr('src', 'slovenia.png');
+            $('#to-flag').attr('src', 'united-kingdom.png');
         }
 
     });

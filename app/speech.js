@@ -49,8 +49,10 @@ exports.snemaj = function(req, res) {
   const recognizeStream = speech.createRecognizeStream(request)
     .on('error', console.error)
     .on('data', (data) => {
-      if (prevedi) {
+      if (prevedi && req.url.substring(8,9) == 1) {
         translateText(data.results, 'en');
+      } else if (prevedi && req.url.substring(8,9) == 0) {
+        translateText(data.results, 'sl');
       } else {
         if(curSocket){
           curSocket.emit('recognized',{text:data.results, time: (curTime.getTime() - startTime.getTime())/1000.0});
